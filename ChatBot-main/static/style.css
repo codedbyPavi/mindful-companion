@@ -1,0 +1,94 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78));
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.chat {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card {
+  height: 500px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.06); /* slightly brighter */
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.card-footer, .card-header {
+  border-radius: 0 0 15px 15px;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.type_msg {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  height: 60px;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.type_msg::placeholder {
+  color: #cccccc;
+  font-style: italic;
+}
+
+.send_btn {
+  background-color: #58cc71;
+  color: white;
+  border: none;
+  border-radius: 0 10px 10px 0;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.send_btn:hover {
+  background-color: #45b65b;
+}
+
+.msg_cotainer {
+  background-color: rgb(82, 172, 255);
+  padding: 10px 15px;
+  border-radius: 25px;
+  position: relative;
+  margin-left: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 75%;
+  color: black;
+}
+
+.msg_cotainer_send {
+  background-color: #58cc71;
+  padding: 10px 15px;
+  border-radius: 25px;
+  position: relative;
+  margin-right: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 75%;
+  color: black;
+}
+
+.user_img, .user_img_msg {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1.5px solid white;
+}
+
+/* Optional scroll area improvement */
+.msg_card_body {
+  overflow-y: auto;
+  padding: 20px;
+  height: 380px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}

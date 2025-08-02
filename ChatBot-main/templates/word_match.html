@@ -1,0 +1,113 @@
+<!-- templates/word_match.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Word Match – Positive Vibes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fc5c7d, #6a82fb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      grid-gap: 15px;
+    }
+
+    .card {
+      background: #fff;
+      color: #333;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .matched {
+      background: #4CAF50;
+      color: white;
+      cursor: default;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #fff;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Match the Positivity!</h1>
+  <div class="grid" id="grid"></div>
+  <button class="btn" onclick="location.href='/games'">← Back to Games</button>
+
+  <script>
+    const words = ["Joy", "Hope", "Peace", "Love", "Calm", "Smile", "Kind", "Shine"];
+    let gameWords = [...words, ...words];
+    gameWords.sort(() => 0.5 - Math.random());
+
+    const grid = document.getElementById("grid");
+    let firstCard = null;
+    let secondCard = null;
+
+    gameWords.forEach(word => {
+      const div = document.createElement("div");
+      div.classList.add("card");
+      div.dataset.word = word;
+      div.innerText = "";
+      div.addEventListener("click", () => flipCard(div));
+      grid.appendChild(div);
+    });
+
+    function flipCard(card) {
+      if (card.classList.contains("matched") || card === firstCard) return;
+
+      card.innerText = card.dataset.word;
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        secondCard = card;
+        if (firstCard.dataset.word === secondCard.dataset.word) {
+          firstCard.classList.add("matched");
+          secondCard.classList.add("matched");
+          resetCards();
+        } else {
+          setTimeout(() => {
+            firstCard.innerText = "";
+            secondCard.innerText = "";
+            resetCards();
+          }, 700);
+        }
+      }
+    }
+
+    function resetCards() {
+      firstCard = null;
+      secondCard = null;
+    }
+  </script>
+</body>
+</html>

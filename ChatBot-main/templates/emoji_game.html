@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emoji Catcher</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1d2b64, #f8cdda);
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 32px;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100%;
+      height: 85vh;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 40px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s ease;
+    }
+
+    .emoji:active {
+      transform: scale(1.4);
+    }
+
+    .score {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .back {
+      position: absolute;
+      bottom: 15px;
+      left: 20px;
+    }
+
+    .back a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧼 Tap Only the Sad 😢 Emojis to Clear Your Mood!</h1>
+  <div class="score">Score: <span id="score">0</span></div>
+  <div id="game-container"></div>
+
+  <div class="back">
+    <a href="/games">← Back to Games</a>
+  </div>
+
+  <script>
+    const emojis = ["😊", "😢", "😍"];
+    const gameContainer = document.getElementById("game-container");
+    const scoreDisplay = document.getElementById("score");
+    let score = 0;
+
+    function spawnEmoji() {
+      const emoji = document.createElement("div");
+      emoji.classList.add("emoji");
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = `${Math.random() * 95}%`;
+      emoji.style.top = `${Math.random() * 90}%`;
+
+      emoji.onclick = function () {
+        if (emoji.innerText === "😢") {
+          score++;
+          scoreDisplay.textContent = score;
+        } else {
+          score = Math.max(0, score - 1);
+          scoreDisplay.textContent = score;
+        }
+        emoji.remove();
+      };
+
+      gameContainer.appendChild(emoji);
+
+      // Auto-remove after 5 seconds
+      setTimeout(() => emoji.remove(), 5000);
+    }
+
+    setInterval(spawnEmoji, 800);
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!-- personality-check.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Discover Your Inner Vibe</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 50px 15px;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    .dark-mode {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #eee;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.07);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .vibe-box {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-left: 4px solid #ffd700;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+
+    .color-swatch {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .swatch {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .swatch {
+      box-shadow: 0 0 25px white, 0 0 10px white inset;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <button class="btn btn-light toggle-btn" onclick="toggleMode()">🌓 Toggle Mood</button>
+
+  <div class="container">
+    <h1>🌟 Discover Your Inner Vibe</h1>
+    <p>Answer like you’re writing a love letter to yourself 💌</p>
+
+    <form method="POST" action="/personality-check">
+      <div class="form-group">
+        <h4>1. Choose the color that feels most like you 🌈</h4>
+        <div class="color-swatch">
+          <label><input type="radio" name="color" value="#ffcccc" required><div class="swatch" style="background-color: #ffcccc;"></div></label>
+          <label><input type="radio" name="color" value="#add8e6"><div class="swatch" style="background-color: #add8e6;"></div></label>
+          <label><input type="radio" name="color" value="#90ee90"><div class="swatch" style="background-color: #90ee90;"></div></label>
+          <label><input type="radio" name="color" value="#f4a261"><div class="swatch" style="background-color: #f4a261;"></div></label>
+          <label><input type="radio" name="color" value="#d291bc"><div class="swatch" style="background-color: #d291bc;"></div></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h4>2. Which season reflects your heart?</h4>
+        <select name="season" class="form-control" required>
+          <option value="spring">🌸 Spring</option>
+          <option value="summer">☀️ Summer</option>
+          <option value="autumn">🍂 Autumn</option>
+          <option value="winter">❄️ Winter</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <h4>3. Your comfort food?</h4>
+        <select name="food" class="form-control" required>
+          <option value="chocolate">🍫 Chocolate</option>
+          <option value="soup">🥣 Soup</option>
+          <option value="icecream">🍦 Ice Cream</option>
+          <option value="spicy">🌶️ Spicy Snacks</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <h4>4. A sound that calms your soul?</h4>
+        <select name="sound" class="form-control" required>
+          <option value="lofi">🎧 Lo-fi Beats</option>
+          <option value="ocean">🌊 Ocean Waves</option>
+          <option value="violin">🎻 Classical Violin</option>
+          <option value="silence">🌌 Silence</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <h4>5. Pick a word you need right now</h4>
+        <select name="word" class="form-control" required>
+          <option value="peace">🕊 Peace</option>
+          <option value="joy">🌈 Joy</option>
+          <option value="strength">💪 Strength</option>
+          <option value="flow">🌊 Flow</option>
+          <option value="magic">✨ Magic</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-light">✨ Reveal My Vibe</button>
+    </form>
+
+    {% if vibe %}
+    <div class="vibe-box mt-4">
+      <h3>🌷 Your Personality Reflection</h3>
+      {{ vibe | safe }}
+      {% if surprise %}
+<div class="vibe-box mt-4">
+  <h4>🎁 Surprise Note for You</h4>
+  <p>{{ surprise }}</p>
+</div>
+{% endif %}
+    </div>
+    {% endif %}
+
+    <a href="/" class="btn btn-outline-light mt-4">← Back Home</a>
+  </div>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>

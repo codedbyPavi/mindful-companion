@@ -1,0 +1,109 @@
+<!-- templates/bubble_shooter.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bubble Shooter</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    canvas {
+      background: white;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #fff;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🫧 Bubble Shooter – Relax & Pop</h1>
+  <canvas id="bubbleCanvas" width="400" height="400"></canvas>
+  <button class="btn" onclick="location.href='/games'">← Back to Games</button>
+
+  <script>
+    const canvas = document.getElementById("bubbleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    class Bubble {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.radius = 15 + Math.random() * 10;
+        this.speed = 1 + Math.random() * 3;
+        this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      update() {
+        this.y -= this.speed;
+        this.draw();
+      }
+
+      isClicked(x, y) {
+        const dx = this.x - x;
+        const dy = this.y - y;
+        return Math.sqrt(dx * dx + dy * dy) < this.radius;
+      }
+    }
+
+    let bubbles = [];
+
+    function spawnBubbles() {
+      if (bubbles.length < 20) {
+        bubbles.push(new Bubble());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      spawnBubbles();
+      bubbles.forEach((bubble, index) => {
+        bubble.update();
+        if (bubble.y + bubble.radius < 0) bubbles.splice(index, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    canvas.addEventListener("click", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      bubbles = bubbles.filter((b) => !b.isClicked(x, y));
+    });
+
+    animate();
+  </script>
+</body>
+</html>
